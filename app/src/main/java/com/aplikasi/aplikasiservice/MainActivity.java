@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -35,28 +34,32 @@ public class MainActivity extends AppCompatActivity {
 
         mUnsetBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent mDisable = new Intent(MainActivity.this,
-                        WallpaperChangeService.class);
+            public void onClick (View v){
+                Intent mDisable = new Intent(MainActivity.this, WallpaperChangeService.class);
                 stopService(mDisable);
                 finish();
             }
         });
-        mSetBtn.setOnClickListener(new View.OnClickListener() {
+
+        mSetBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 int mRadioID = mTimeRadioGroup.getCheckedRadioButtonId();
-                if(mMenitRadio.getId()==mRadioID){mChangeTime=60;}
+                if (mMenitRadio.getId()==mRadioID){mChangeTime=60;}
                 else if (mLimaRadio.getId()==mRadioID){mChangeTime=5*60;}
                 else if (mTigaPuluhRadio.getId()==mRadioID){mChangeTime=30*60;}
                 else if (mJamRadio.getId()==mRadioID){mChangeTime=60*60;}
 
-                Intent mService = new Intent(MainActivity.this,
-                        WallpaperChangeService.class);
+                Intent mService = new Intent(MainActivity.this, WallpaperChangeService.class);
+
                 Bundle mBundleTime = new Bundle();
                 mBundleTime.putInt("durasi", mChangeTime);
+
                 mService.putExtras(mBundleTime);
+
                 startService(mService);
+
+                finish();
             }
         });
     }
